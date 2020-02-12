@@ -53,7 +53,7 @@ export default class Carousel extends Component {
       pageIndex: 0,
     };
     this.cardIndex = null;
-    this.initByProps();
+    this.initByProps(props);
     this.setupTimer();
   }
 
@@ -67,17 +67,9 @@ export default class Carousel extends Component {
     this.removeTimer();
   }
 
-  componentDidUpdate(prevProps) {
-    let {children, carousel, direction, startIndex, cycle} = this.props;
-    let pageCount = children ? (children instanceof Array ? children.length : 1) : 0;
-    if (pageCount != this.pageCount
-      || carousel != prevProps.carousel
-      || direction != prevProps.direction
-      || startIndex != prevProps.startIndex
-      || cycle != prevProps.cycle) {
-      this.initByProps();
-      this.setupTimer();
-    }
+  componentWillReceiveProps(nextProps) {
+    this.initByProps(nextProps);
+    this.setupTimer();
   }
 
   //滚动到指定页
@@ -91,8 +83,8 @@ export default class Carousel extends Component {
   }
 
   //初始化轮播参数
-  initByProps() {
-    let {children, carousel, direction, startIndex, cycle} = this.props;
+  initByProps(props) {
+    let {children, carousel, direction, startIndex, cycle} = props;
 
     //页数
     this.pageCount = children ? (children instanceof Array ? children.length : 1) : 0;

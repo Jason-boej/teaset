@@ -8,7 +8,7 @@ import {View, Text} from 'react-native';
 
 import TeaNavigatorScene from './TeaNavigatorScene';
 
-import {Navigator} from 'react-native-legacy-components';
+import {Navigator} from 'react-native-deprecated-custom-components';
 //replace NavigatorScene, optimize the effect of the scene
 Navigator.SceneConfigs = TeaNavigatorScene;
 

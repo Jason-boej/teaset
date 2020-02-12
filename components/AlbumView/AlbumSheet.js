@@ -49,23 +49,23 @@ export default class AlbumSheet extends TransformView {
   }
 
   componentDidMount() {
-    this.loadImage();
+    this.loadImage(this.props);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.image != this.props.image || prevProps.load != this.props.load) {
-      this.loadImage();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.image != this.props.image || nextProps.load != this.props.load) {
+      this.loadImage(nextProps);
     }
   }
 
-  loadImage() {
-    let {image, thumb, load, onWillLoadImage, onLoadImageSuccess, onLoadImageFailure} = this.props;
+  loadImage(props) {
+    let {image, thumb, load, onWillLoadImage, onLoadImageSuccess, onLoadImageFailure} = props;
     let {imageLoaded, thumbLoaded} = this.state;
 
     if (!load) return;
 
     if (React.isValidElement(image)) {
-      let {width, height} = this.getElementSize(image);
+      let {width, height} = this.getElementSize(props.image);
       this.imageSizeChange(width, height);
       this.setState({imageLoaded: true});
     } else {

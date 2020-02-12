@@ -9,15 +9,13 @@ npm install --save teaset
 ```
 
 # Example
-Clone teaset project from github (or download zip file):
+In the Teaset package directory:
 ```
-git clone https://github.com/rilyu/teaset.git
-cd teaset/example
+cd example
 npm install
 ```
 To run example on iOS:
 ```
-cd ios && pod install && cd ..
 react-native run-ios
 ```
 To run example on Android:

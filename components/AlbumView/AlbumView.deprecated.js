@@ -59,13 +59,13 @@ export default class AlbumView extends Component {
     this.preloadImage(this.state.index);
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     let {imageInfos, index} = this.state;
-    if ((this.props.index || this.props.index === 0) && prevProps.index != this.props.index) {
-      index = this.props.index;
+    if ((nextProps.index || nextProps.index === 0) && nextProps.index != this.props.index) {
+      index = nextProps.index;
     }
-    if (prevProps.images.length != this.props.images.length) {
-      imageInfos = this.initImageInfos(this.props.images);
+    if (nextProps.images.length != this.props.images.length) {
+      imageInfos = this.initImageInfos(nextProps.images);
     }
     this.preloadImage(index);
     this.setState({index, imageInfos}, () => this.checkLeftRight());

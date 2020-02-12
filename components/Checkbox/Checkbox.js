@@ -40,17 +40,16 @@ export default class Checkbox extends TouchableOpacity {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    let {checked, disabled} = this.props;
-    if (checked === true || checked === false) {
-      if (checked !== this.state.checked) {
-        this.setState({checked});
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.checked === true || nextProps.checked === false) {
+      if (nextProps.checked != this.state.checked) {
+        this.setState({checked: nextProps.checked});
       }
     }
-    if (disabled !== prevProps.disabled) {
+    if (nextProps.disabled != this.props.disabled) {
       let opacity = Theme.cbDisabledOpacity;
-      if (!disabled) {
-        let fs = StyleSheet.flatten(this.props.style);
+      if (!nextProps.disabled) {
+        let fs = StyleSheet.flatten(nextProps.style);
         opacity = fs && (fs.opacity || fs.opacity === 0) ? fs.opacity : 1;
       }
       this.state.anim.setValue(opacity);

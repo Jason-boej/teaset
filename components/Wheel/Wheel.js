@@ -45,7 +45,7 @@ export default class Wheel extends Component {
     this.targetPositionValue = null;
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.positionListenerId) {
       this.positionListenerId = this.currentPosition.addListener(e => this.handlePositionChange(e.value));
     }
@@ -164,9 +164,7 @@ export default class Wheel extends Component {
       let maskHeight = (height - holeHeight) / 2;
       this.hiddenOffset = Math.ceil(maskHeight / holeHeight) + this.constructor.preRenderCount;
     }
-    this.forceUpdate(() => {
-      this.currentPosition.setValue(this.index * holeHeight);
-    });
+    this.forceUpdate(() => this.currentPosition.setValue(this.index * holeHeight));
   }
 
   onLayout(e) {
@@ -200,7 +198,7 @@ export default class Wheel extends Component {
     if (typeof item === 'string' || typeof item === 'number') {
       item = <Text style={itemStyle}>{item}</Text>;
     }
-
+    
     return (
       <this.constructor.Item
         itemHeight={this.holeHeight}

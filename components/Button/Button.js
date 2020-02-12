@@ -24,11 +24,11 @@ export default class Button extends TouchableOpacity {
     size: 'md',
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.disabled != this.props.disabled) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.disabled != this.props.disabled) {
       let opacity = Theme.btnDisabledOpacity;
-      if (!this.props.disabled) {
-        let fs = StyleSheet.flatten(this.props.style);
+      if (!nextProps.disabled) {
+        let fs = StyleSheet.flatten(nextProps.style);
         opacity = fs && (fs.opacity || fs.opacity === 0) ? fs.opacity : 1;
       }
       this.state.anim.setValue(opacity);

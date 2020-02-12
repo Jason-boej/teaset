@@ -32,10 +32,10 @@ export default class WheelItem extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.positionListenerId) {
       this.positionListenerId = this.props.currentPosition.addListener(e => {
-        this.handlePositionChange(this.props.currentPosition._value);
+        this.handlePositionChange(e.value);
       });
       this.handlePositionChange(this.props.currentPosition._value);
     }
@@ -48,12 +48,12 @@ export default class WheelItem extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     let {itemHeight, wheelHeight, index} = this.props;
-    if (prevProps.index != index
-      || prevProps.itemHeight != itemHeight
-      || prevProps.wheelHeight != wheelHeight) {
-      this.handlePositionChange(this.props.currentPosition._value);
+    if (nextProps.index != index
+      || nextProps.itemHeight != itemHeight
+      || nextProps.wheelHeight != wheelHeight) {
+      this.handlePositionChange(nextProps.currentPosition._value, nextProps);
     }
   }
 
@@ -73,8 +73,8 @@ export default class WheelItem extends Component {
     return {point: pointProjection, width: widthProjection};
   }
 
-  handlePositionChange(value) {
-    let {itemHeight, wheelHeight, index} = this.props;
+  handlePositionChange(value, props = null) {
+    let {itemHeight, wheelHeight, index} = props ? props : this.props;
 
     if (!itemHeight || !wheelHeight) return;
     if (this.lastPosition !== null && Math.abs(this.lastPosition - value) < 1) return;
